@@ -1,25 +1,34 @@
 const express = require("express");
 const serverless = require("serverless-http");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-// Create an instance of the Express app
 const app = express();
+const PORT = process.env.PORT || 8080;
+const cors = require("cors");
+require("dotenv").config();
 
-// Create a router to handle routes
-const router = express.Router();
+app.use(express.json());
+app.use(cors());
 
-// Define a route that responds with a JSON object when a GET request is made to the root path
-router.get("/", (req, res) => {
-  res.json({
-    hello: "hi!",
-  });
+// mongoose.connect(process.env.DATABASE_URL);
+const DATABASE_URL =
+  "mongodb+srv://mira-v1:password1234@cluster0.siye4oj.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(DATABASE_URL);
+
+// const router = express.Router();
+// router.get("/", (req, res) => {
+//   res.json({
+//     hello: "hi!",
+//   });
+// });
+
+// app.use(`/app`, router);
+
+app.get("/app", async (request, response) => {
+  console.log("hey");
+  response.send({ hello: "world" });
 });
 
-// Use the router to handle requests to the `/.netlify/functions/api` path
-// app.use(`/.netlify/functions/app`, router);
-app.use(`/app`, router);
-
-// Export the app and the serverless function
 const handler = serverless(app);
 module.exports.handler = async (event, context) => {
   // mongoose.connect(process.env.DATABASE_URL);
