@@ -1,5 +1,6 @@
 const express = require("express");
 const serverless = require("serverless-http");
+// const mongoose = require("mongoose");
 
 // Create an instance of the Express app
 const app = express();
@@ -15,8 +16,15 @@ router.get("/", (req, res) => {
 });
 
 // Use the router to handle requests to the `/.netlify/functions/api` path
-app.use(`/.netlify/functions/api`, router);
+// app.use(`/.netlify/functions/app`, router);
+app.use(`/app`, router);
 
 // Export the app and the serverless function
-module.exports = app;
-module.exports.handler = serverless(app);
+const handler = serverless(app);
+module.exports.handler = async (event, context) => {
+  // mongoose.connect(process.env.DATABASE_URL);
+  // you can do other things here
+  const result = await handler(event, context);
+  // and here
+  return result;
+};
