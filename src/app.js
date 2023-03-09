@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
   });
 });
 
-app.use(`/app`, router);
+app.use(`/.netlify/functions/app`, router);
 
 // app.get("/app", async (request, response) => {
 //   console.log("hey");
