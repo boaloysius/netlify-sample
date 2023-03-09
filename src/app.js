@@ -15,19 +15,19 @@ const DATABASE_URL =
   "mongodb+srv://mira-v1:password1234@cluster0.siye4oj.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(DATABASE_URL);
 
-// const router = express.Router();
-// router.get("/", (req, res) => {
-//   res.json({
-//     hello: "hi!",
-//   });
-// });
-
-// app.use(`/app`, router);
-
-app.get("/app", async (request, response) => {
-  console.log("hey");
-  response.send({ hello: "world" });
+const router = express.Router();
+router.get("/", (req, res) => {
+  res.json({
+    hello: "hi!",
+  });
 });
+
+app.use(`/app`, router);
+
+// app.get("/app", async (request, response) => {
+//   console.log("hey");
+//   response.send({ hello: "world" });
+// });
 
 const handler = serverless(app);
 module.exports.handler = async (event, context) => {
